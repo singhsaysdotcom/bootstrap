@@ -149,7 +149,7 @@ describe('typeahead tests', function () {
       };
       var element = prepareInputEl('<div><input ng-model="result" typeahead="updaterFn(item) as item for item in source | filter:$viewValue"></div>');
       changeInputValueTo(element, 'f');
-      triggerKeyDown(element, 13);
+      triggerKeyDown(element, 9);
       expect($scope.result).toEqual('prefixfoo');
     });
 
@@ -188,7 +188,7 @@ describe('typeahead tests', function () {
       expect($scope.form.input.$error.editable).toBeTruthy();
 
       changeInputValueTo(element, 'foo');
-      triggerKeyDown(element, 13);
+      triggerKeyDown(element, 9);
       expect($scope.result).toEqual('foo');
       expect($scope.form.input.$error.editable).toBeFalsy();
     });
@@ -290,7 +290,7 @@ describe('typeahead tests', function () {
 
   describe('selecting a match', function () {
 
-    it('should select a match on enter', function () {
+    it('should select user input on enter', function () {
 
       var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue"></div>');
       var inputEl = findInput(element);
@@ -298,9 +298,22 @@ describe('typeahead tests', function () {
       changeInputValueTo(element, 'b');
       triggerKeyDown(element, 13);
 
-      expect($scope.result).toEqual('bar');
-      expect(inputEl.val()).toEqual('bar');
+      expect($scope.result).toEqual('b');
+      expect(inputEl.val()).toEqual('b');
       expect(element).toBeClosed();
+    });
+
+    it('should not select anything on enter if no matches and non-editable', function () {
+
+      var element = prepareInputEl('<div><input ng-model="result" typeahead="item for item in source | filter:$viewValue" typeahead-editable="false"></div>');
+      var inputEl = findInput(element);
+
+      changeInputValueTo(element, 'b');
+      triggerKeyDown(element, 13);
+
+      expect($scope.result).toBeUndefined();
+      expect(inputEl.val()).toEqual('b');
+      expect(element).not.toBeClosed();
     });
 
     it('should select a match on tab', function () {
@@ -342,7 +355,7 @@ describe('typeahead tests', function () {
       var element = prepareInputEl('<div><input ng-model="result" typeahead-on-select="onSelect($item, $model, $label)" typeahead="state.code as state.name for state in states | filter:$viewValue"></div>');
 
       changeInputValueTo(element, 'Alas');
-      triggerKeyDown(element, 13);
+      triggerKeyDown(element, 9);
 
       expect($scope.result).toEqual('AL');
       expect($scope.$item).toEqual($scope.states[0]);
@@ -356,7 +369,7 @@ describe('typeahead tests', function () {
       var inputEl = findInput(element);
 
       changeInputValueTo(element, 'Alas');
-      triggerKeyDown(element, 13);
+      triggerKeyDown(element, 9);
 
       expect($scope.result).toEqual('AL');
       expect(inputEl.val()).toEqual('AL');
@@ -477,7 +490,7 @@ describe('typeahead tests', function () {
       changeInputValueTo(element, 'bar');
       expect(element).toBeOpenWithActive(1, 0);
 
-      triggerKeyDown(element, 13);
+      triggerKeyDown(element, 9);
 
       expect($scope.email).toEqual('bar@host.com');
       expect(inputEl.val()).toEqual('bar@host.com');

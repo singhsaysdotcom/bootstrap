@@ -208,7 +208,11 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
         var locals = {};
         var model, item;
 
-        locals[parserResult.itemName] = item = scope.matches[activeIdx].model;
+        // No matches and no activeIdx implies there are no matches and isEditable is true.
+        // Accept current user input as the desired value in this case.
+        item = (activeIdx !== null && scope.matches.length) ? scope.matches[activeIdx].model : modelCtrl.$viewValue;
+
+        locals[parserResult.itemName] = item;
         model = parserResult.modelMapper(originalScope, locals);
         $setModelValue(originalScope, model);
         modelCtrl.$setValidity('editable', true);
@@ -228,6 +232,13 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
       //bind keyboard events: arrows up(38) / down(40), enter(13) and tab(9), esc(27)
       element.bind('keydown', function (evt) {
 
+        // Exception for enter (13) if isEditable is true;
+        if (isEditable && evt.which === 13) {
+          scope.$apply(function() {
+            scope.select(null);
+          });
+          return;
+        }
         //typeahead is open and an "interesting" key was pressed
         if (scope.matches.length === 0 || HOT_KEYS.indexOf(evt.which) === -1) {
           return;
@@ -243,7 +254,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.position', 'ui.bootstrap
           scope.activeIdx = (scope.activeIdx ? scope.activeIdx : scope.matches.length) - 1;
           scope.$digest();
 
-        } else if (evt.which === 13 || evt.which === 9) {
+        } else if (evt.which === 9) {
           scope.$apply(function () {
             scope.select(scope.activeIdx);
           });
