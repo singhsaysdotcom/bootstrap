@@ -1,3 +1,130 @@
+# 0.11.0 (2014-02-15)
+
+## Features
+
+- **accordion:** 
+  - support `is-disabled` state ([9c43ae7c](http://github.com/angular-ui/bootstrap/commit/9c43ae7c))  
+- **carousel:** 
+  - Support swipe for touchscreen devices ([85140f84](http://github.com/angular-ui/bootstrap/commit/85140f84))  
+- **datepicker:** 
+  - add `datepicker-mode`, `init-date` & today hint ([7f4b40eb](http://github.com/angular-ui/bootstrap/commit/7f4b40eb))  
+- **dropdown:** 
+  - add WAI-ARIA attributes ([22ebd230](http://github.com/angular-ui/bootstrap/commit/22ebd230))  
+- **dropdownToggle:** 
+  - support programmatic trigger & toggle callback ([ae31079c](http://github.com/angular-ui/bootstrap/commit/ae31079c))  
+  - add support for `escape` key ([1417c548](http://github.com/angular-ui/bootstrap/commit/1417c548))  
+- **pagination:** 
+  - plug into `ngModel` controller ([d65901cf](http://github.com/angular-ui/bootstrap/commit/d65901cf))  
+- **progressbar:** 
+  - make widget accessible ([9dfe3157](http://github.com/angular-ui/bootstrap/commit/9dfe3157))  
+- **rating:** 
+  - plug into `ngModel` controller ([47e227f6](http://github.com/angular-ui/bootstrap/commit/47e227f6))  
+  - make widget accessible ([4f56e60e](http://github.com/angular-ui/bootstrap/commit/4f56e60e))  
+- **tooltip:** 
+  - support more positioning options ([3704db9a](http://github.com/angular-ui/bootstrap/commit/3704db9a))   
+
+## Bug Fixes
+
+- **alert:** 
+  - use interpolation for type attribute ([f0a129ad](http://github.com/angular-ui/bootstrap/commit/f0a129ad))  
+  - add `alert-dismissable` class ([794954af](http://github.com/angular-ui/bootstrap/commit/794954af))  
+- **datepicker:** 
+  - remove unneeded date creation ([68cb2e5a](http://github.com/angular-ui/bootstrap/commit/68cb2e5a))  
+- **demo:** 
+  - Scroll to element on initialization ([4a9dbbef](http://github.com/angular-ui/bootstrap/commit/4a9dbbef))  
+- **dropdown:** 
+  - use $animate for adding and removing classes ([e8d5fefc](http://github.com/angular-ui/bootstrap/commit/e8d5fefc))  
+- **moadl:** 
+  - toggle 'modal-open' class after animation ([4d641ca7](http://github.com/angular-ui/bootstrap/commit/4d641ca7))  
+- **modal:** 
+  - destroy modal scope after animation end ([dfc36fd9](http://github.com/angular-ui/bootstrap/commit/dfc36fd9))  
+  - backdrop z-index when stacking modals ([94a7f593](http://github.com/angular-ui/bootstrap/commit/94a7f593))  
+- **pagination:** 
+  - take maxSize defaults into account ([a294c87f](http://github.com/angular-ui/bootstrap/commit/a294c87f))  
+- **position:** 
+  - remove deprecated body scrollTop and scrollLeft ([1ba07c1b](http://github.com/angular-ui/bootstrap/commit/1ba07c1b))  
+- **progressbar:** 
+  - allow fractional values for bar width ([0daa7a74](http://github.com/angular-ui/bootstrap/commit/0daa7a74))  
+- **tabs:** 
+  - fire deselect before select callback ([7474c47b](http://github.com/angular-ui/bootstrap/commit/7474c47b))  
+  - use interpolation for type attribute ([83ceb78a](http://github.com/angular-ui/bootstrap/commit/83ceb78a))  
+  - remove `tabbable` class required for left/right tabs ([19468331](http://github.com/angular-ui/bootstrap/commit/19468331))  
+- **typeahead:** 
+  - correctly handle append to body attribute ([10785736](http://github.com/angular-ui/bootstrap/commit/10785736))  
+  - correctly higlight numeric matches ([09678b12](http://github.com/angular-ui/bootstrap/commit/09678b12))   
+
+## Breaking Changes
+
+- **alert:** 
+ Use interpolation for type attribute.
+
+  Before:
+
+  ```html
+  <alert type="'info'" ...></alert >
+  ```
+  or
+  ```html
+  <alert type="alert.type" ...></alert >
+  ```
+
+  After:
+
+  ```html
+  <alert type="info" ...></alert >
+  ```
+  or
+  ```html
+  <alert type="{{alert.type}}" ...></alert >
+  ```
+
+- **datepicker:** 
+
+`show-weeks` is no longer a watched attribute
+`*-format` attributes have been renamed to `format-*`
+`min` attribute has been renamed to `min-date`
+`max` attribute has been renamed to `max-date`
+
+- **pagination:** 
+ Both `pagination` and `pager` are now integrated with `ngModelController`.
+ * `page` is replaced from `ng-model`.
+ * `on-select-page` is removed since `ng-change` can now be used.
+
+  Before:
+
+  <pagination page="current" on-select-page="changed(page)" ...></pagination>
+
+  After:
+
+  <pagination ng-model="current" ng-change="changed()" ...></pagination>
+
+- **rating:** 
+ `rating` is now integrated with `ngModelController`.
+ * `value` is replaced from `ng-model`.
+
+  Before:
+
+  <rating value="rate" ...></rating>
+
+  After:
+
+  <rating ng-model="rate" ...></rating>
+
+- **tabs:** 
+ Use interpolation for type attribute.
+
+  Before:
+
+  <tabset type="'pills'" ...></tabset >
+  or
+  <tabset type="navtype" ...></tabset>
+
+  After:
+
+  <tabset type="pills" ...></tabset>
+  or
+  <tabset type="{{navtype}}" ...></tabset>
+ 
 # 0.10.0 (2014-01-13)
 
 _This release adds AngularJS 1.2 support_
